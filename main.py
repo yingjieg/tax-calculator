@@ -1,66 +1,117 @@
-pension_insurance = 8
-medical_insurance = 2
-unemployment_insurance = 0.5
-housing_fund = 7
+#!/usr/bin/env python
+
+import json
 
 
-salary = 25000
+def load_config():
+    config = {}
 
-social_insurance_base = 24633
-housing_fund_base = 23496
+    with open('config.json') as f:
+        content = f.read()
+        config = json.loads(content)
 
-
-sib = salary if salary < social_insurance_base else social_insurance_base
-hfb = salary if salary < housing_fund_base else housing_fund_base
-
-
-pension = sib * pension_insurance / 100
-medical = sib * medical_insurance / 100
-unemployment = sib * unemployment_insurance / 100
-housing = hfb * housing_fund / 100
-
-total_insurance = pension + medical + unemployment + housing
-
-print('Pension Insurance       -     {}'.format(pension))
-print('Medical Insurance       -     {}'.format(medical))
-print('Unemployment Insurance  -     {}'.format(unemployment))
-print('Housing Fund            -     {}'.format(housing))
+    return config
 
 
-income_total = 0
-last_tax = 0
+def calc_insurance(salary, config):
+    social_ins_base = config['social_ins_base']
+    housing_fund_base = config['housing_fund_base']
 
-for idx in range(0, 12):
-    taxable_salary = salary - 5000 - total_insurance - 3500
+    sib = salary if salary < social_ins_base else social_ins_base
+    hfb = salary if salary < housing_fund_base else housing_fund_base
 
-    income_total += taxable_salary
+    individual = config['individual']
 
-    tax = 0
+    pension_ins_rate = individual['pension_ins_rate']
+    medical_ins_rate = individual['medical_ins_rate']
+    unemployment_ins_rate = individual['unemployment_ins_rate']
+    housing_fund_rate = individual['housing_fund_rate']
+    supplementary_housing_fund_rate = individual['supplementary_housing_fund_rate']
 
-    if income_total < 0:
+    pension_ins = sib * pension_ins_rate / 100
+    medical_ins = sib * medical_ins_rate / 100
+    unemployment_ins = sib * unemployment_ins_rate / 100
+    housing_fund = hfb * housing_fund_rate / 100
+    supplementary_housing_fund = hfb * supplementary_housing_fund_rate / 100
+
+    return {
+        'pension_insurance': pension_ins,
+        'medical_insurance': medical_ins,
+        'unemployment_insurance': unemployment_ins,
+        'housing_fund': housing_fund,
+        'supplementary_housing_fund': supplementary_housing_fund,
+        'total': pension_ins
+        + medical_ins
+        + unemployment_ins
+        + housing_fund
+        + supplementary_housing_fund,
+    }
+
+
+def calc_tax(salary, social_insurance, config):
+
+    additional_deduction = config['individual']['additional_deduction']
+    tax_threshold = config['tax_threshold']
+
+    income_total = 0
+    last_tax = 0
+
+    taxable_salary = salary - tax_threshold - social_insurance - additional_deduction
+
+    taxs = []
+
+    for idx in range(0, 12):
+
+        income_total += taxable_salary
+
         tax = 0
 
-    elif income_total < 36000:
-        tax = income_total * 3 / 100
+        if income_total < 0:
+            tax = 0
 
-    elif 36000 <= income_total < 144000:
-        tax = income_total * 10 / 100 - 2520
+        elif income_total < 36000:
+            tax = income_total * 3 / 100
 
-    elif 144000 <= income_total < 300000:
-        tax = income_total * 20 / 100 - 16920
+        elif 36000 <= income_total < 144000:
+            tax = income_total * 10 / 100 - 2520
 
-    elif 300000 <= income_total < 420000:
-        tax = income_total * 25 / 100 - 31920
+        elif 144000 <= income_total < 300000:
+            tax = income_total * 20 / 100 - 16920
 
-    elif 420000 <= income_total < 660000:
-        tax = income_total * 30 / 100 - 52920
+        elif 300000 <= income_total < 420000:
+            tax = income_total * 25 / 100 - 31920
 
-    elif 660000 <= income_total < 960000:
-        tax = income_total * 35 / 100 - 85920
+        elif 420000 <= income_total < 660000:
+            tax = income_total * 30 / 100 - 52920
 
-    elif income_total >= 960000:
-        tax = income_total * 45 / 100 - 181920
+        elif 660000 <= income_total < 960000:
+            tax = income_total * 35 / 100 - 85920
 
-    print('tax on {} is {}'.format(idx + 1, tax - last_tax))
+        elif income_total >= 960000:
+            tax = income_total * 45 / 100 - 181920
 
-    last_tax = tax
+        taxs.append(round(tax - last_tax, 2))
+
+        last_tax = tax
+
+    return taxs
+
+
+def main():
+    config = load_config()
+
+    salary = config['salary']
+
+    ins = calc_insurance(salary, config)
+    print('Pension Insurance         -     {}'.format(ins['pension_insurance']))
+    print('Medical Insurance         -     {}'.format(ins['medical_insurance']))
+    print('Unemployment Insurance    -     {}'.format(ins['unemployment_insurance']))
+    print('Housing Fund              -     {}'.format(ins['housing_fund']))
+
+    taxs = calc_tax(salary, ins['total'], config)
+
+    for idx, tax in enumerate(taxs):
+        print('Month {}        -         {}'.format(idx + 1, tax))
+
+
+main()

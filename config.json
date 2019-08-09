@@ -1,0 +1,23 @@
+{
+    "salary": 25000,
+
+    "tax_threshold": 5000,
+
+    "social_ins_base": 24633,
+
+    "housing_fund_base": 23496,
+
+    "individual": {
+        "pension_ins_rate": 8,
+
+        "medical_ins_rate": 2,
+
+        "unemployment_ins_rate": 0.5,
+
+        "housing_fund_rate": 7,
+
+        "supplementary_housing_fund_rate": 0,
+
+        "additional_deduction": 0
+    }
+}
