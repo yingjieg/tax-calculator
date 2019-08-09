@@ -60,7 +60,7 @@ def calc_tax(salary, social_insurance, config):
 
     taxs = []
 
-    for idx in range(0, 12):
+    for _ in range(0, 12):
 
         income_total += taxable_salary
 
@@ -95,23 +95,3 @@ def calc_tax(salary, social_insurance, config):
         last_tax = tax
 
     return taxs
-
-
-def main():
-    config = load_config()
-
-    salary = config['salary']
-
-    ins = calc_insurance(salary, config)
-    print('Pension Insurance         -     {}'.format(ins['pension_insurance']))
-    print('Medical Insurance         -     {}'.format(ins['medical_insurance']))
-    print('Unemployment Insurance    -     {}'.format(ins['unemployment_insurance']))
-    print('Housing Fund              -     {}'.format(ins['housing_fund']))
-
-    taxs = calc_tax(salary, ins['total'], config)
-
-    for idx, tax in enumerate(taxs):
-        print('Month {}        -         {}'.format(idx + 1, tax))
-
-
-main()
