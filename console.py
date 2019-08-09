@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function, division
 from calc import load_config, calc_insurance, calc_tax
 
 
@@ -12,7 +16,9 @@ def print_to_console():
     print('Medical Insurance           -     {}'.format(ins['medical_insurance']))
     print('Unemployment Insurance      -     {}'.format(ins['unemployment_insurance']))
     print('Housing Fund                -     {}'.format(ins['housing_fund']))
-    print('Supplementary Housing Fund  -     {}'.format(ins['supplementary_housing_fund']))
+    print(
+        'Supplementary Housing Fund  -     {}'.format(ins['supplementary_housing_fund'])
+    )
     print('\nTotal                       -     {}'.format(ins['total']))
 
     print('\n\n\n### Tax Details\n')
