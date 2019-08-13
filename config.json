@@ -3,9 +3,9 @@
 
     "tax_threshold": 5000,
 
-    "social_ins_base": 24633,
+    "social_ins_base": 21396,
 
-    "housing_fund_base": 23496,
+    "housing_fund_base": 21400,
 
     "individual": {
         "pension_ins_rate": 8,

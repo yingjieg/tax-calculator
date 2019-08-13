@@ -13,7 +13,7 @@ def load_config():
     return config
 
 
-def calc_insurance(salary, config):
+def calc_insurance(salary: int, config: dict):
     social_ins_base = config['social_ins_base']
     housing_fund_base = config['housing_fund_base']
 
@@ -48,12 +48,38 @@ def calc_insurance(salary, config):
     }
 
 
-def calc_tax(salary, social_insurance, config):
+def get_tax_rate(total_income: int):
+    if total_income <= 0:
+        return 0, 0
+
+    if total_income < 36000:
+        return 3, 0
+
+    if 36000 <= total_income < 144000:
+        return 10, 2520
+
+    if 144000 <= total_income < 300000:
+        return 20, 16920
+
+    if 300000 <= total_income < 420000:
+        return 25, 31920
+
+    if 420000 <= total_income < 660000:
+        return 30, 52920
+
+    if 660000 <= total_income < 960000:
+        return 35, 85920
+
+    if total_income >= 960000:
+        return 45, 181920
+
+
+def calc_tax(salary: int, social_insurance: int, config: dict):
 
     additional_deduction = config['individual']['additional_deduction']
     tax_threshold = config['tax_threshold']
 
-    income_total = 0
+    total_income = 0
     last_tax = 0
 
     taxable_salary = salary - tax_threshold - social_insurance - additional_deduction
@@ -62,33 +88,13 @@ def calc_tax(salary, social_insurance, config):
 
     for _ in range(0, 12):
 
-        income_total += taxable_salary
+        total_income += taxable_salary
 
         tax = 0
 
-        if income_total < 0:
-            tax = 0
+        tax_rate, quick_deduction = get_tax_rate(total_income)
 
-        elif income_total < 36000:
-            tax = income_total * 3 / 100
-
-        elif 36000 <= income_total < 144000:
-            tax = income_total * 10 / 100 - 2520
-
-        elif 144000 <= income_total < 300000:
-            tax = income_total * 20 / 100 - 16920
-
-        elif 300000 <= income_total < 420000:
-            tax = income_total * 25 / 100 - 31920
-
-        elif 420000 <= income_total < 660000:
-            tax = income_total * 30 / 100 - 52920
-
-        elif 660000 <= income_total < 960000:
-            tax = income_total * 35 / 100 - 85920
-
-        elif income_total >= 960000:
-            tax = income_total * 45 / 100 - 181920
+        tax = total_income * tax_rate / 100 - quick_deduction
 
         taxs.append(round(tax - last_tax, 2))
 

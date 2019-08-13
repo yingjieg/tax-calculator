@@ -5,12 +5,9 @@ from __future__ import print_function, division
 from calc import load_config, calc_insurance, calc_tax
 
 
-def print_to_console():
-    config = load_config()
-
-    salary = config['salary']
-
+def print_to_console(salary, config):
     ins = calc_insurance(salary, config)
+
     print('### Social Insurance Details\n')
     print('Pension Insurance           -     {}'.format(ins['pension_insurance']))
     print('Medical Insurance           -     {}'.format(ins['medical_insurance']))
@@ -40,4 +37,7 @@ def print_to_console():
 
 
 if __name__ == '__main__':
-    print_to_console()
+    config = load_config()
+    salary = config['salary']
+
+    print_to_console(salary, config)
