@@ -13,14 +13,14 @@ def load_config():
     return config
 
 
-def calc_insurance(salary: int, config: dict):
+def calc_insurance(salary: int, config: dict, paid_by: str='individual'):
     social_ins_base = config['social_ins_base']
     housing_fund_base = config['housing_fund_base']
 
     sib = salary if salary < social_ins_base else social_ins_base
     hfb = salary if salary < housing_fund_base else housing_fund_base
 
-    individual = config['individual']
+    individual = config[paid_by]
 
     pension_ins_rate = individual['pension_ins_rate']
     medical_ins_rate = individual['medical_ins_rate']
@@ -34,7 +34,7 @@ def calc_insurance(salary: int, config: dict):
     housing_fund = hfb * housing_fund_rate / 100
     supplementary_housing_fund = hfb * supplementary_housing_fund_rate / 100
 
-    return {
+    data = {
         'pension_insurance': pension_ins,
         'medical_insurance': medical_ins,
         'unemployment_insurance': unemployment_ins,
@@ -46,6 +46,18 @@ def calc_insurance(salary: int, config: dict):
         + housing_fund
         + supplementary_housing_fund,
     }
+
+    if paid_by == 'enterprise':
+        injury_ins = sib * individual['injury_ins_rate'] / 100
+        maternity_ins = sib * individual['maternity_ins_rate'] / 100
+
+        data['injury_insurance'] = injury_ins
+        data['maternity_insurance'] = maternity_ins
+        data['total'] += injury_ins + maternity_ins
+
+
+    return data
+
 
 
 def get_tax_rate(total_income: int):

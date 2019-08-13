@@ -19,5 +19,21 @@
         "supplementary_housing_fund_rate": 0,
 
         "additional_deduction": 0
+    },
+
+    "enterprise": {
+        "pension_ins_rate": 20,
+
+        "medical_ins_rate": 9.5,
+
+        "unemployment_ins_rate": 0.5,
+
+        "housing_fund_rate": 7,
+
+        "supplementary_housing_fund_rate": 0,
+
+        "injury_ins_rate": 0.2,
+
+        "maternity_ins_rate": 1
     }
 }
