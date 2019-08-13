@@ -3,10 +3,10 @@
 import json
 
 
-def load_config():
+def load_config(path="config.json"):
     config = {}
 
-    with open('config.json') as f:
+    with open(path) as f:
         content = f.read()
         config = json.loads(content)
 
@@ -20,13 +20,13 @@ def calc_insurance(salary: int, config: dict, paid_by: str='individual'):
     sib = salary if salary < social_ins_base else social_ins_base
     hfb = salary if salary < housing_fund_base else housing_fund_base
 
-    individual = config[paid_by]
+    idx = 0 if paid_by == 'individual' else 1
 
-    pension_ins_rate = individual['pension_ins_rate']
-    medical_ins_rate = individual['medical_ins_rate']
-    unemployment_ins_rate = individual['unemployment_ins_rate']
-    housing_fund_rate = individual['housing_fund_rate']
-    supplementary_housing_fund_rate = individual['supplementary_housing_fund_rate']
+    pension_ins_rate = config['pension_ins_rate'][idx]
+    medical_ins_rate = config['medical_ins_rate'][idx]
+    unemployment_ins_rate = config['unemployment_ins_rate'][idx]
+    housing_fund_rate = config['housing_fund_rate'][idx]
+    supplementary_housing_fund_rate = config['supplementary_housing_fund_rate'][idx]
 
     pension_ins = sib * pension_ins_rate / 100
     medical_ins = sib * medical_ins_rate / 100
@@ -48,8 +48,8 @@ def calc_insurance(salary: int, config: dict, paid_by: str='individual'):
     }
 
     if paid_by == 'enterprise':
-        injury_ins = sib * individual['injury_ins_rate'] / 100
-        maternity_ins = sib * individual['maternity_ins_rate'] / 100
+        injury_ins = sib * config['injury_ins_rate'][idx] / 100
+        maternity_ins = sib * config['maternity_ins_rate'][idx] / 100
 
         data['injury_insurance'] = injury_ins
         data['maternity_insurance'] = maternity_ins
@@ -88,7 +88,7 @@ def get_tax_rate(total_income: int):
 
 def calc_tax(salary: int, social_insurance: int, config: dict):
 
-    additional_deduction = config['individual']['additional_deduction']
+    additional_deduction = config['additional_deduction']
     tax_threshold = config['tax_threshold']
 
     total_income = 0

@@ -40,7 +40,7 @@ def print_to_console(salary, config):
 
 
 if __name__ == '__main__':
-    config = load_config()
+    config = load_config('config_v2.json')
     salary = config['salary']
 
     print_to_console(salary, config)
