@@ -7,17 +7,39 @@ from calc import load_config, calc_insurance, calc_tax
 
 def print_to_console(salary, config):
     ins = calc_insurance(salary, config)
-    ins2 = calc_insurance(salary, config,'enterprise')
+    ins2 = calc_insurance(salary, config, 'enterprise')
 
     print('### Social Insurance Details\n')
     print('{:40} {:20} {:20}\n'.format('', 'Individual', 'Enterprise'))
-    print('{:30} {:20} {:20}'.format('Pension Insurance', ins['pension_insurance'], ins2['pension_insurance']))
-    print('{:30} {:20} {:20}'.format('Medical Insurance', ins['medical_insurance'], ins2['medical_insurance']))
-    print('{:30} {:20} {:20}'.format('Unemployment Insurance', ins['unemployment_insurance'], ins2['unemployment_insurance']))
-    print('{:30} {:20} {:20}'.format('Housing Fund', ins['housing_fund'], ins2['housing_fund']))
-    print('{:30} {:20} {:20}'.format('Supplementary Housing Fund', ins['supplementary_housing_fund'], ins2['supplementary_housing_fund']))
-    print('{:30} {:20} {:20}'.format('Injury Insurance', '', ins2['injury_insurance']))
-    print('{:30} {:20} {:20}'.format('Maternity Insurance', '', ins2['maternity_insurance']))
+    print(
+        '{:30} {:20} {:20}'.format(
+            'Pension Insurance', ins['pension_ins'], ins2['pension_ins']
+        )
+    )
+    print(
+        '{:30} {:20} {:20}'.format(
+            'Medical Insurance', ins['medical_ins'], ins2['medical_ins']
+        )
+    )
+    print(
+        '{:30} {:20} {:20}'.format(
+            'Unemployment Insurance', ins['unemployment_ins'], ins2['unemployment_ins']
+        )
+    )
+    print(
+        '{:30} {:20} {:20}'.format(
+            'Housing Fund', ins['housing_fund'], ins2['housing_fund']
+        )
+    )
+    print(
+        '{:30} {:20} {:20}'.format(
+            'Supplementary Housing Fund',
+            ins['supplementary_housing_fund'],
+            ins2['supplementary_housing_fund'],
+        )
+    )
+    print('{:30} {:20} {:20}'.format('Injury Insurance', '', ins2['injury_ins']))
+    print('{:30} {:20} {:20}'.format('Maternity Insurance', '', ins2['maternity_ins']))
 
     print('\n{:30} {:20} {:20}'.format('Total', ins['total'], ins2['total']))
 
