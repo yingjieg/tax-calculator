@@ -73,14 +73,14 @@ export function calc_insurance(config, paid_by = 'individual') {
     maternity_ins;
 
   return {
-    pension_ins,
-    medical_ins,
-    unemployment_ins,
-    housing_fund,
-    supplementary_housing_fund,
-    injury_ins,
-    maternity_ins,
-    total,
+    pension_ins: pension_ins.toFixed(2),
+    medical_ins: medical_ins.toFixed(2),
+    unemployment_ins: unemployment_ins.toFixed(2),
+    housing_fund: housing_fund.toFixed(2),
+    supplementary_housing_fund: supplementary_housing_fund.toFixed(2),
+    injury_ins: injury_ins.toFixed(2),
+    maternity_ins: maternity_ins.toFixed(2),
+    total: total.toFixed(2),
   };
 }
 
@@ -103,7 +103,7 @@ export function calc_tax(social_insurance, config) {
 
     tax = (total_income * tax_rate) / 100 - quick_deduction;
 
-    taxs.push(Math.round(tax - last_tax));
+    taxs.push((tax - last_tax).toFixed(2));
 
     last_tax = tax;
   }

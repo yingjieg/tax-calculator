@@ -2,6 +2,12 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 
 function TaxDetails({ taxs }) {
+  const getAverageInHand = values => {
+    const avg = taxs.reduce((accu, curr) => +curr.in_hand + accu, 0) / 12;
+
+    return avg.toFixed(2);
+  };
+
   return (
     <>
       {taxs.length > 0 && (
@@ -24,6 +30,12 @@ function TaxDetails({ taxs }) {
                 <Table.Cell>{item.in_hand}</Table.Cell>
               </Table.Row>
             ))}
+            <Table.Row>
+              <Table.Cell colSpan={3} style={{ textAlign: 'right' }}>
+                <b>平均月工资：</b>
+              </Table.Cell>
+              <Table.Cell><b>{getAverageInHand(taxs)}</b></Table.Cell>
+            </Table.Row>
           </Table.Body>
         </Table>
       )}
