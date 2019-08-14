@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+
 import InsuranceTable from './InsuranceTable';
 import ConfigForm from './ConfigForm';
-import config from '../config.json';
 import TaxDetails from './TaxDetails';
 
+import config from '../config.json';
 import { calc_tax, calc_insurance } from '../services/calc';
 
 function Calculator() {
@@ -28,7 +29,7 @@ function Calculator() {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: 768, margin: '0 auto' }}>
       <ConfigForm config={config} onCalculate={handleCalculate} />
       <InsuranceTable individual={insIndividual} enterprise={insEnterprise} />
       <TaxDetails taxs={taxs} />

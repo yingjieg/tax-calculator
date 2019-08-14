@@ -110,7 +110,6 @@ function ConfigForm({ config, onCalculate }) {
       <Input
         value={salary}
         onChange={handleSalaryChange}
-        style={{ width: 360 }}
       />
       <Button onClick={handleCalc} style={{ marginLeft: 20 }}>
         计算
