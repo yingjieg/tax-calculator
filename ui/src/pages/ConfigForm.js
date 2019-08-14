@@ -76,11 +76,18 @@ function ConfigForm({ config, onCalculate }) {
   const handleHousingFundCheck = e => {
     if (housingFundChecked) {
       setHousingFundRate(0);
+    } else {
+      setHousingFundRate(7);
     }
+
     checkHousingFund(!housingFundChecked);
   };
 
   const handleSupplHousingFundCheck = e => {
+    if (supplHousingFundChecked) {
+      setSupplHousingFundRate(0);
+    }
+
     checkSupplHousingFund(!supplHousingFundChecked);
   };
 
