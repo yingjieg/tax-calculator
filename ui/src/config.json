@@ -5,21 +5,19 @@
 
   "additional_deduction": 0,
 
-  "social_ins_base": 21396,
+  "social_ins_base": 24633,
 
-  "housing_fund_base": 21400,
+  "pension_ins_pct": [8, 16],
 
-  "pension_ins_rate": [8, 20],
+  "medical_ins_pct": [2, 9.5],
 
-  "medical_ins_rate": [2, 9.5],
+  "unemployment_ins_pct": [0.5, 0.5],
 
-  "unemployment_ins_rate": [0.5, 0.5],
+  "housing_fund_pct": 7,
 
-  "housing_fund_rate": 7,
+  "supplementary_housing_fund_pct": 0,
 
-  "supplementary_housing_fund_rate": 0,
+  "injury_ins_pct": [0, 0.16],
 
-  "injury_ins_rate": [0, 0.2],
-
-  "maternity_ins_rate": [0, 1]
+  "maternity_ins_pct": [0, 1]
 }

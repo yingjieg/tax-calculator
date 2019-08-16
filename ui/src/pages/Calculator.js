@@ -29,12 +29,18 @@ function Calculator() {
     setInsIndividual(ins1);
     setInsEnterprise(ins2);
     setTaxs(taxs);
+
+    console.log(newConfig);
   };
 
   return (
     <div style={{ maxWidth: 768, margin: '0 auto' }}>
       <ConfigForm config={config} onCalculate={handleCalculate} />
-      <InsuranceTable individual={insIndividual} enterprise={insEnterprise} config={cfg} />
+      <InsuranceTable
+        individual={insIndividual}
+        enterprise={insEnterprise}
+        config={cfg}
+      />
       <TaxDetails taxs={taxs} />
     </div>
   );

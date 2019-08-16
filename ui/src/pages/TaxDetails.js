@@ -34,7 +34,9 @@ function TaxDetails({ taxs }) {
               <Table.Cell colSpan={3} style={{ textAlign: 'right' }}>
                 <b>平均月工资：</b>
               </Table.Cell>
-              <Table.Cell><b>{getAverageInHand(taxs)}</b></Table.Cell>
+              <Table.Cell>
+                <b>{getAverageInHand(taxs)}</b>
+              </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>

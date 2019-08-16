@@ -11,28 +11,22 @@ import {
 } from 'semantic-ui-react';
 
 const MIN_SOCIAL_INS_BASE = 4279;
-const MAX_SOCIAL_INS_BASE = 21396;
-
-const MIN_HOUSING_FUND_BASE = 2300;
-const MAX_HOUSING_FUND_BASE = 21400;
+const MAX_SOCIAL_INS_BASE = 24633;
 
 function ConfigForm({ config, onCalculate }) {
   const [salary, setSalary] = useState(config.salary);
+
   const [socialInsBase, setSocialInsBase] = useState(config.social_ins_base);
-  const [housingFundBase, setHousingFundBase] = useState(
-    config.housing_fund_base
-  );
+
   const [additionalDeduction, setAdditionalDeduction] = useState(
     config.additional_deduction
   );
   const [housingFundChecked, checkHousingFund] = useState(true);
   const [supplHousingFundChecked, checkSupplHousingFund] = useState(false);
 
-  const [housingFundRate, setHousingFundRate] = useState(
-    config.housing_fund_rate
-  );
-  const [supplHousingFundRate, setSupplHousingFundRate] = useState(
-    config.supplementary_housing_fund_rate
+  const [housingFundPct, setHousingFundPct] = useState(config.housing_fund_pct);
+  const [supplHousingFundPct, setSupplHousingFundPct] = useState(
+    config.supplementary_housing_fund_pct
   );
 
   const handleSalaryChange = e => {
@@ -48,24 +42,11 @@ function ConfigForm({ config, onCalculate }) {
     } else if (value >= MAX_SOCIAL_INS_BASE) {
       setSocialInsBase(MAX_SOCIAL_INS_BASE);
     }
-
-    if (value <= MIN_HOUSING_FUND_BASE) {
-      setHousingFundBase(MIN_HOUSING_FUND_BASE);
-    } else if (value > MIN_HOUSING_FUND_BASE && value < MAX_HOUSING_FUND_BASE) {
-      setHousingFundBase(+value);
-    } else if (value >= MAX_HOUSING_FUND_BASE) {
-      setHousingFundBase(MAX_HOUSING_FUND_BASE);
-    }
   };
 
   const handleSocialInsBaseChange = e => {
     e.preventDefault();
     setSocialInsBase(+e.target.value);
-  };
-
-  const handleHousingFundBaseChange = e => {
-    e.preventDefault();
-    setHousingFundBase(+e.target.value);
   };
 
   const handleAdditionalDeductionChange = e => {
@@ -75,9 +56,10 @@ function ConfigForm({ config, onCalculate }) {
 
   const handleHousingFundCheck = e => {
     if (housingFundChecked) {
-      setHousingFundRate(0);
+      setHousingFundPct(0);
+      setSupplHousingFundPct(0);
     } else {
-      setHousingFundRate(7);
+      setHousingFundPct(7);
     }
 
     checkHousingFund(!housingFundChecked);
@@ -85,16 +67,24 @@ function ConfigForm({ config, onCalculate }) {
 
   const handleSupplHousingFundCheck = e => {
     if (supplHousingFundChecked) {
-      setSupplHousingFundRate(0);
+      setSupplHousingFundPct(0);
+    } else {
+      setSupplHousingFundPct(5);
     }
 
     checkSupplHousingFund(!supplHousingFundChecked);
   };
 
+  const handleHousingFundChange = (e, option) => {
+    e.preventDefault();
+    const { value } = option;
+    setHousingFundPct(value);
+  };
+
   const handleSupplHousingFundChange = (e, option) => {
     e.preventDefault();
     const { value } = option;
-    setSupplHousingFundRate(value);
+    setSupplHousingFundPct(value);
   };
 
   const handleCalc = e => {
@@ -105,19 +95,15 @@ function ConfigForm({ config, onCalculate }) {
       salary,
       additional_deduction: additionalDeduction,
       social_ins_base: socialInsBase,
-      housing_fund_base: housingFundBase,
-      housing_fund_rate: housingFundRate,
-      supplementary_housing_fund_rate: supplHousingFundRate,
+      housing_fund_pct: housingFundPct,
+      supplementary_housing_fund_pct: supplHousingFundPct,
     });
   };
 
   return (
     <>
       <label>税前：</label>
-      <Input
-        value={salary}
-        onChange={handleSalaryChange}
-      />
+      <Input value={salary} onChange={handleSalaryChange} />
       <Button onClick={handleCalc} style={{ marginLeft: 20 }}>
         计算
       </Button>
@@ -128,13 +114,6 @@ function ConfigForm({ config, onCalculate }) {
             <input value={socialInsBase} onChange={handleSocialInsBaseChange} />
           </Form.Field>
           <Form.Field inline>
-            <label style={{ width: 120 }}>公积金汇缴基数：</label>
-            <input
-              value={housingFundBase}
-              onChange={handleHousingFundBaseChange}
-            />
-          </Form.Field>
-          <Form.Field inline>
             <label style={{ width: 120 }}>专项扣除：</label>
             <input
               value={additionalDeduction}
@@ -142,28 +121,40 @@ function ConfigForm({ config, onCalculate }) {
             />
           </Form.Field>
           <Divider />
-          <Form.Field
-            control={Checkbox}
-            label={{ children: `汇缴公积金 ( ${housingFundRate} % )` }}
-            checked={housingFundChecked}
-            onChange={handleHousingFundCheck}
-          />
+          <Form.Group inline>
+            <Form.Field
+              control={Checkbox}
+              label={{ children: '汇缴住房公积金' }}
+              checked={housingFundChecked}
+              onChange={handleHousingFundCheck}
+            />
+            <Form.Field
+              control={Select}
+              value={housingFundPct}
+              onChange={handleHousingFundChange}
+              options={[7, 6, 5].map(item => ({
+                key: item,
+                text: `${item} %`,
+                value: item,
+              }))}
+            />
+          </Form.Group>
           {housingFundChecked && (
             <Form.Group inline>
               <Form.Field
                 control={Checkbox}
-                label={{ children: '汇缴补充住房公积金' }}
+                label={{ children: '汇缴补充公积金' }}
                 checked={supplHousingFundChecked}
                 onChange={handleSupplHousingFundCheck}
               />
               <Form.Field
                 control={Select}
-                value={supplHousingFundRate}
+                value={supplHousingFundPct}
                 onChange={handleSupplHousingFundChange}
-                options={[...Array(8).keys()].map(item => ({
-                  key: item + 1,
-                  text: `${item + 1} %`,
-                  value: item + 1,
+                options={[5, 4, 3, 2, 1].map(item => ({
+                  key: item,
+                  text: `${item} %`,
+                  value: item,
                 }))}
                 disabled={!supplHousingFundChecked}
               />

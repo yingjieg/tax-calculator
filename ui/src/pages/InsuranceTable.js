@@ -24,13 +24,13 @@ function InsuranceTable({ individual, enterprise, config }) {
               <Table.Cell>
                 <span>{individual.pension_ins}</span>
                 <Label style={floatRight} basic>
-                  {config.pension_ins_rate[0]} %
+                  {config.pension_ins_pct[0]} %
                 </Label>
               </Table.Cell>
               <Table.Cell>
                 <span>{enterprise.pension_ins}</span>
                 <Label style={floatRight} basic>
-                  {config.pension_ins_rate[1]} %
+                  {config.pension_ins_pct[1]} %
                 </Label>
               </Table.Cell>
             </Table.Row>
@@ -39,13 +39,13 @@ function InsuranceTable({ individual, enterprise, config }) {
               <Table.Cell>
                 <span>{individual.medical_ins}</span>
                 <Label style={floatRight} basic>
-                  {config.medical_ins_rate[0]} %
+                  {config.medical_ins_pct[0]} %
                 </Label>
               </Table.Cell>
               <Table.Cell>
                 <span>{enterprise.medical_ins}</span>
                 <Label style={floatRight} basic>
-                  {config.medical_ins_rate[1]} %
+                  {config.medical_ins_pct[1]} %
                 </Label>
               </Table.Cell>
             </Table.Row>
@@ -54,13 +54,13 @@ function InsuranceTable({ individual, enterprise, config }) {
               <Table.Cell>
                 <span>{individual.unemployment_ins}</span>
                 <Label style={floatRight} basic>
-                  {config.unemployment_ins_rate[0]} %
+                  {config.unemployment_ins_pct[0]} %
                 </Label>
               </Table.Cell>
               <Table.Cell>
                 <span>{enterprise.unemployment_ins}</span>
                 <Label style={floatRight} basic>
-                  {config.unemployment_ins_rate[1]} %
+                  {config.unemployment_ins_pct[1]} %
                 </Label>
               </Table.Cell>
             </Table.Row>
@@ -69,13 +69,13 @@ function InsuranceTable({ individual, enterprise, config }) {
               <Table.Cell>
                 <span>{individual.housing_fund}</span>
                 <Label style={floatRight} basic>
-                  {config.housing_fund_rate} %
+                  {config.housing_fund_pct} %
                 </Label>
               </Table.Cell>
               <Table.Cell>
                 <span>{enterprise.housing_fund}</span>
                 <Label style={floatRight} basic>
-                  {config.housing_fund_rate} %
+                  {config.housing_fund_pct} %
                 </Label>
               </Table.Cell>
             </Table.Row>
@@ -84,13 +84,13 @@ function InsuranceTable({ individual, enterprise, config }) {
               <Table.Cell>
                 <span>{individual.supplementary_housing_fund}</span>
                 <Label style={floatRight} basic>
-                  {config.supplementary_housing_fund_rate} %
+                  {config.supplementary_housing_fund_pct} %
                 </Label>
               </Table.Cell>
               <Table.Cell>
                 <span>{enterprise.supplementary_housing_fund}</span>
                 <Label style={floatRight} basic>
-                  {config.supplementary_housing_fund_rate} %
+                  {config.supplementary_housing_fund_pct} %
                 </Label>
               </Table.Cell>
             </Table.Row>
@@ -100,7 +100,7 @@ function InsuranceTable({ individual, enterprise, config }) {
               <Table.Cell>
                 <span>{enterprise.injury_ins}</span>
                 <Label style={floatRight} basic>
-                  {config.injury_ins_rate[1]} %
+                  {config.injury_ins_pct[1]} %
                 </Label>
               </Table.Cell>
             </Table.Row>
@@ -110,7 +110,7 @@ function InsuranceTable({ individual, enterprise, config }) {
               <Table.Cell>
                 <span>{enterprise.maternity_ins}</span>
                 <Label style={floatRight} basic>
-                  {config.maternity_ins_rate[1]} %
+                  {config.maternity_ins_pct[1]} %
                 </Label>
               </Table.Cell>
             </Table.Row>
