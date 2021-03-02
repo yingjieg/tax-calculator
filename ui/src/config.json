@@ -9,7 +9,7 @@
 
   "pension_ins_pct": [8, 16],
 
-  "medical_ins_pct": [2, 10],
+  "medical_ins_pct": [2, 9.5],
 
   "unemployment_ins_pct": [0.5, 0.5],
 
