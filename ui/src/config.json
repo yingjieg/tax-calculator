@@ -5,11 +5,11 @@
 
   "additional_deduction": 0,
 
-  "social_ins_base": 24633,
+  "social_ins_base": 28017,
 
   "pension_ins_pct": [8, 16],
 
-  "medical_ins_pct": [2, 9.5],
+  "medical_ins_pct": [2, 10],
 
   "unemployment_ins_pct": [0.5, 0.5],
 

@@ -10,8 +10,8 @@ import {
   Select,
 } from 'semantic-ui-react';
 
-const MIN_SOCIAL_INS_BASE = 4279;
-const MAX_SOCIAL_INS_BASE = 24633;
+const MIN_SOCIAL_INS_BASE = 4927;
+const MAX_SOCIAL_INS_BASE = 28017;
 
 function ConfigForm({ config, onCalculate }) {
   const [salary, setSalary] = useState(config.salary);
