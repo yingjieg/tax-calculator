@@ -48,12 +48,12 @@ function ConfigForm({ config, onCalculate }) {
 
   const handleSocialInsBaseChange = (e) => {
     e.preventDefault();
-    setSocialInsBase(+e.target.value);
+    setSocialInsBase(+e.target.value || MAX_SOCIAL_INS_BASE);
   };
 
   const handleAdditionalDeductionChange = (e) => {
     e.preventDefault();
-    setAdditionalDeduction(+e.target.value);
+    setAdditionalDeduction(+e.target.value || 0);
   };
 
   const handleHousingFundCheck = (e) => {
@@ -105,7 +105,7 @@ function ConfigForm({ config, onCalculate }) {
   return (
     <>
       <label>税前：</label>
-      <Input value={salary} onChange={handleSalaryChange} type="number" />
+      <Input value={salary} onChange={handleSalaryChange} />
       {/* <span style={{ marginLeft: 12 }}>
         {Intl.NumberFormat("zh-CN", {
           style: "currency",
@@ -119,18 +119,13 @@ function ConfigForm({ config, onCalculate }) {
         <Form>
           <Form.Field inline>
             <label style={{ width: 120 }}>社保汇缴基数：</label>
-            <input
-              value={socialInsBase}
-              onChange={handleSocialInsBaseChange}
-              type="number"
-            />
+            <input value={socialInsBase} onChange={handleSocialInsBaseChange} />
           </Form.Field>
           <Form.Field inline>
             <label style={{ width: 120 }}>专项扣除：</label>
             <input
               value={additionalDeduction}
               onChange={handleAdditionalDeductionChange}
-              type="number"
             />
           </Form.Field>
           <Divider />
