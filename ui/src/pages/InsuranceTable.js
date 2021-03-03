@@ -1,8 +1,11 @@
 import React from 'react';
 import { Table, Label } from 'semantic-ui-react';
 
+import { numberWithCommas } from "../services/utils"
+
 const floatRight = {
   float: 'right',
+  minWidth: 64,
 };
 
 function InsuranceTable({ individual, enterprise, config }) {
@@ -119,10 +122,10 @@ function InsuranceTable({ individual, enterprise, config }) {
                 <Label ribbon>共计支出：</Label>
               </Table.Cell>
               <Table.Cell>
-                <b>{individual.total}</b>
+                <b>{numberWithCommas(individual.total)}</b>
               </Table.Cell>
               <Table.Cell>
-                <b>{enterprise.total}</b>
+                <b>{numberWithCommas(enterprise.total)}</b>
               </Table.Cell>
             </Table.Row>
           </Table.Body>

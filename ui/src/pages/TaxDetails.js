@@ -1,8 +1,10 @@
-import React from 'react';
-import { Table } from 'semantic-ui-react';
+import React from "react";
+import { Table } from "semantic-ui-react";
+
+import { numberWithCommas } from "../services/utils";
 
 function TaxDetails({ taxs }) {
-  const getAverageInHand = values => {
+  const getAverageInHand = (values) => {
     const avg = taxs.reduce((accu, curr) => +curr.in_hand + accu, 0) / 12;
 
     return avg.toFixed(2);
@@ -22,20 +24,22 @@ function TaxDetails({ taxs }) {
           </Table.Header>
 
           <Table.Body>
-            {taxs.map(item => (
+            {taxs.map((item) => (
               <Table.Row key={item.month}>
                 <Table.Cell>{item.month}</Table.Cell>
-                <Table.Cell>{item.tax}</Table.Cell>
-                <Table.Cell>{item.social_insurance}</Table.Cell>
-                <Table.Cell>{item.in_hand}</Table.Cell>
+                <Table.Cell>{numberWithCommas(item.tax)}</Table.Cell>
+                <Table.Cell>
+                  {numberWithCommas(item.social_insurance)}
+                </Table.Cell>
+                <Table.Cell>{numberWithCommas(item.in_hand)}</Table.Cell>
               </Table.Row>
             ))}
             <Table.Row>
-              <Table.Cell colSpan={3} style={{ textAlign: 'right' }}>
+              <Table.Cell colSpan={3} style={{ textAlign: "right" }}>
                 <b>平均月工资：</b>
               </Table.Cell>
               <Table.Cell>
-                <b>{getAverageInHand(taxs)}</b>
+                <b>{numberWithCommas(getAverageInHand(taxs))}</b>
               </Table.Cell>
             </Table.Row>
           </Table.Body>

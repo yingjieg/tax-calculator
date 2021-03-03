@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   Button,
@@ -8,7 +8,8 @@ import {
   Input,
   Segment,
   Select,
-} from 'semantic-ui-react';
+} from "semantic-ui-react";
+import { numberWithCommas } from "../services/utils";
 
 const MIN_SOCIAL_INS_BASE = 4927;
 const MAX_SOCIAL_INS_BASE = 28017;
@@ -29,32 +30,33 @@ function ConfigForm({ config, onCalculate }) {
     config.supplementary_housing_fund_pct
   );
 
-  const handleSalaryChange = e => {
+  const handleSalaryChange = (e) => {
     e.preventDefault();
     const { value } = e.target;
+    const salary = +value || 0;
 
-    setSalary(+value);
+    setSalary(salary);
 
-    if (value <= MIN_SOCIAL_INS_BASE) {
+    if (salary <= MIN_SOCIAL_INS_BASE) {
       setSocialInsBase(MIN_SOCIAL_INS_BASE);
-    } else if (value > MIN_SOCIAL_INS_BASE && value < MAX_SOCIAL_INS_BASE) {
-      setSocialInsBase(+value);
-    } else if (value >= MAX_SOCIAL_INS_BASE) {
+    } else if (salary > MIN_SOCIAL_INS_BASE && salary < MAX_SOCIAL_INS_BASE) {
+      setSocialInsBase(salary);
+    } else if (salary >= MAX_SOCIAL_INS_BASE) {
       setSocialInsBase(MAX_SOCIAL_INS_BASE);
     }
   };
 
-  const handleSocialInsBaseChange = e => {
+  const handleSocialInsBaseChange = (e) => {
     e.preventDefault();
     setSocialInsBase(+e.target.value);
   };
 
-  const handleAdditionalDeductionChange = e => {
+  const handleAdditionalDeductionChange = (e) => {
     e.preventDefault();
     setAdditionalDeduction(+e.target.value);
   };
 
-  const handleHousingFundCheck = e => {
+  const handleHousingFundCheck = (e) => {
     if (housingFundChecked) {
       setHousingFundPct(0);
       setSupplHousingFundPct(0);
@@ -65,7 +67,7 @@ function ConfigForm({ config, onCalculate }) {
     checkHousingFund(!housingFundChecked);
   };
 
-  const handleSupplHousingFundCheck = e => {
+  const handleSupplHousingFundCheck = (e) => {
     if (supplHousingFundChecked) {
       setSupplHousingFundPct(0);
     } else {
@@ -87,7 +89,7 @@ function ConfigForm({ config, onCalculate }) {
     setSupplHousingFundPct(value);
   };
 
-  const handleCalc = e => {
+  const handleCalc = (e) => {
     e.preventDefault();
 
     onCalculate({
@@ -103,7 +105,13 @@ function ConfigForm({ config, onCalculate }) {
   return (
     <>
       <label>税前：</label>
-      <Input value={salary} onChange={handleSalaryChange} />
+      <Input value={salary} onChange={handleSalaryChange} type="number" />
+      {/* <span style={{ marginLeft: 12 }}>
+        {Intl.NumberFormat("zh-CN", {
+          style: "currency",
+          currency: "CNY",
+        }).format(salary)}
+      </span> */}
       <Button onClick={handleCalc} style={{ marginLeft: 20 }}>
         计算
       </Button>
@@ -111,20 +119,25 @@ function ConfigForm({ config, onCalculate }) {
         <Form>
           <Form.Field inline>
             <label style={{ width: 120 }}>社保汇缴基数：</label>
-            <input value={socialInsBase} onChange={handleSocialInsBaseChange} />
+            <input
+              value={socialInsBase}
+              onChange={handleSocialInsBaseChange}
+              type="number"
+            />
           </Form.Field>
           <Form.Field inline>
             <label style={{ width: 120 }}>专项扣除：</label>
             <input
               value={additionalDeduction}
               onChange={handleAdditionalDeductionChange}
+              type="number"
             />
           </Form.Field>
           <Divider />
           <Form.Group inline>
             <Form.Field
               control={Checkbox}
-              label={{ children: '汇缴住房公积金' }}
+              label={{ children: "汇缴住房公积金" }}
               checked={housingFundChecked}
               onChange={handleHousingFundCheck}
             />
@@ -132,7 +145,7 @@ function ConfigForm({ config, onCalculate }) {
               control={Select}
               value={housingFundPct}
               onChange={handleHousingFundChange}
-              options={[7, 6, 5].map(item => ({
+              options={[7, 6, 5].map((item) => ({
                 key: item,
                 text: `${item} %`,
                 value: item,
@@ -143,7 +156,7 @@ function ConfigForm({ config, onCalculate }) {
             <Form.Group inline>
               <Form.Field
                 control={Checkbox}
-                label={{ children: '汇缴补充公积金' }}
+                label={{ children: "汇缴补充公积金" }}
                 checked={supplHousingFundChecked}
                 onChange={handleSupplHousingFundCheck}
               />
@@ -151,7 +164,7 @@ function ConfigForm({ config, onCalculate }) {
                 control={Select}
                 value={supplHousingFundPct}
                 onChange={handleSupplHousingFundChange}
-                options={[5, 4, 3, 2, 1].map(item => ({
+                options={[5, 4, 3, 2, 1].map((item) => ({
                   key: item,
                   text: `${item} %`,
                   value: item,
