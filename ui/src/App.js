@@ -1,7 +1,7 @@
-import React from 'react';
-import Calculator from './pages/Calculator';
+import React from "react";
+import Calculator from "./pages/Calculator";
 
-import './App.css';
+import "./App.css";
 
 function App() {
   return (

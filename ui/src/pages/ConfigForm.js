@@ -11,8 +11,8 @@ import {
 } from "semantic-ui-react";
 import { numberWithCommas } from "../services/utils";
 
-const MIN_SOCIAL_INS_BASE = 4927;
-const MAX_SOCIAL_INS_BASE = 28017;
+const MIN_SOCIAL_INS_BASE = 5975;
+const MAX_SOCIAL_INS_BASE = 31014;
 
 function ConfigForm({ config, onCalculate }) {
   const [salary, setSalary] = useState(config.salary);

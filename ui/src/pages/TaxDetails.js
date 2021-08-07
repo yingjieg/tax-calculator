@@ -10,6 +10,12 @@ function TaxDetails({ taxs }) {
     return avg.toFixed(2);
   };
 
+  const getAverageTax = (values) => {
+    const avg = taxs.reduce((accu, curr) => +curr.tax + accu, 0) / 12;
+
+    return avg.toFixed(2);
+  };
+
   return (
     <>
       {taxs.length > 0 && (
@@ -35,7 +41,13 @@ function TaxDetails({ taxs }) {
               </Table.Row>
             ))}
             <Table.Row>
-              <Table.Cell colSpan={3} style={{ textAlign: "right" }}>
+              <Table.Cell style={{ textAlign: "right" }}>
+                <b>平均月个税：</b>
+              </Table.Cell>
+              <Table.Cell>
+                <b>{getAverageTax(getAverageInHand(taxs))}</b>
+              </Table.Cell>
+              <Table.Cell colSpan={1} style={{ textAlign: "right" }}>
                 <b>平均月工资：</b>
               </Table.Cell>
               <Table.Cell>

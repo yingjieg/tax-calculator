@@ -48,11 +48,8 @@ const HOUSING_FUND_PCT = {
 };
 
 function get_housing_fund(config) {
-  const {
-    social_ins_base,
-    housing_fund_pct,
-    supplementary_housing_fund_pct,
-  } = config;
+  const { social_ins_base, housing_fund_pct, supplementary_housing_fund_pct } =
+    config;
 
   const _get_housing_fund = (type, pct) => {
     let amount = 0;
@@ -73,16 +70,16 @@ function get_housing_fund(config) {
     return amount;
   };
 
-  const housing_fund = _get_housing_fund('basic', housing_fund_pct);
+  const housing_fund = _get_housing_fund("basic", housing_fund_pct);
   const suppl_housing_fund = _get_housing_fund(
-    'suppl',
+    "suppl",
     supplementary_housing_fund_pct
   );
 
   return [housing_fund, suppl_housing_fund];
 }
 
-export function calc_insurance(config, paid_by = 'individual') {
+export function calc_insurance(config, paid_by = "individual") {
   const {
     salary,
     tax_threshold,
@@ -94,7 +91,7 @@ export function calc_insurance(config, paid_by = 'individual') {
 
   const sib = salary < social_ins_base ? salary : social_ins_base;
 
-  const idx = paid_by === 'individual' ? 0 : 1;
+  const idx = paid_by === "individual" ? 0 : 1;
 
   const pension_ins_pct = rest_pcts.pension_ins_pct[idx];
   const medical_ins_pct = rest_pcts.medical_ins_pct[idx];
@@ -105,8 +102,8 @@ export function calc_insurance(config, paid_by = 'individual') {
   const unemployment_ins = (sib * unemployment_ins_pct) / 100;
   const [housing_fund, supplementary_housing_fund] = get_housing_fund(config);
 
-  const injury_ins = (sib * rest_pcts['injury_ins_pct'][idx]) / 100;
-  const maternity_ins = (sib * rest_pcts['maternity_ins_pct'][idx]) / 100;
+  const injury_ins = (sib * rest_pcts["injury_ins_pct"][idx]) / 100;
+  const maternity_ins = (sib * rest_pcts["maternity_ins_pct"][idx]) / 100;
 
   let total =
     pension_ins +

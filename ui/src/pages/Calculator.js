@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import InsuranceTable from './InsuranceTable';
-import ConfigForm from './ConfigForm';
-import TaxDetails from './TaxDetails';
+import InsuranceTable from "./InsuranceTable";
+import ConfigForm from "./ConfigForm";
+import TaxDetails from "./TaxDetails";
 
-import config from '../config.json';
-import { calc_tax, calc_insurance } from '../services/calc';
+import config from "../config.json";
+import { calc_tax, calc_insurance } from "../services/calc";
 
 function Calculator() {
   const [insIndividual, setInsIndividual] = useState(null);
@@ -13,9 +13,9 @@ function Calculator() {
   const [taxs, setTaxs] = useState([]);
   const [cfg, setCfg] = useState(config);
 
-  const handleCalculate = newConfig => {
+  const handleCalculate = (newConfig) => {
     const ins1 = calc_insurance(newConfig);
-    const ins2 = calc_insurance(newConfig, 'enterprise');
+    const ins2 = calc_insurance(newConfig, "enterprise");
 
     setCfg(newConfig);
 
@@ -34,7 +34,7 @@ function Calculator() {
   };
 
   return (
-    <div style={{ maxWidth: 768, margin: '0 auto' }}>
+    <div style={{ maxWidth: 768, margin: "0 auto" }}>
       <ConfigForm config={config} onCalculate={handleCalculate} />
       <InsuranceTable
         individual={insIndividual}

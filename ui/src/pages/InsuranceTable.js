@@ -1,10 +1,10 @@
-import React from 'react';
-import { Table, Label } from 'semantic-ui-react';
+import React from "react";
+import { Table, Label } from "semantic-ui-react";
 
-import { numberWithCommas } from "../services/utils"
+import { numberWithCommas } from "../services/utils";
 
 const floatRight = {
-  float: 'right',
+  float: "right",
   minWidth: 64,
 };
 
