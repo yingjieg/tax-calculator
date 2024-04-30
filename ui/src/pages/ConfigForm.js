@@ -11,13 +11,15 @@ import {
 } from "semantic-ui-react";
 import { numberWithCommas } from "../services/utils";
 
-const MIN_SOCIAL_INS_BASE = 6520;
-const MAX_SOCIAL_INS_BASE = 34188;
+const MIN_SOCIAL_INS_BASE = 7310;
+const MAX_SOCIAL_INS_BASE = 36549;
 
 function ConfigForm({ config, onCalculate }) {
   const [salary, setSalary] = useState(config.salary);
 
-  const [socialInsBase, setSocialInsBase] = useState(config.social_ins_base);
+  const [socialInsBase, setSocialInsBase] = useState(
+    config.social_ins_base_max
+  );
 
   const [additionalDeduction, setAdditionalDeduction] = useState(
     config.additional_deduction
@@ -30,7 +32,7 @@ function ConfigForm({ config, onCalculate }) {
     config.supplementary_housing_fund_pct
   );
 
-  const handleSalaryChange = (e) => {
+  const handleSalaryChange = e => {
     e.preventDefault();
     const { value } = e.target;
     const salary = +value || 0;
@@ -46,17 +48,17 @@ function ConfigForm({ config, onCalculate }) {
     }
   };
 
-  const handleSocialInsBaseChange = (e) => {
+  const handleSocialInsBaseChange = e => {
     e.preventDefault();
     setSocialInsBase(+e.target.value || MAX_SOCIAL_INS_BASE);
   };
 
-  const handleAdditionalDeductionChange = (e) => {
+  const handleAdditionalDeductionChange = e => {
     e.preventDefault();
     setAdditionalDeduction(+e.target.value || 0);
   };
 
-  const handleHousingFundCheck = (e) => {
+  const handleHousingFundCheck = e => {
     if (housingFundChecked) {
       setHousingFundPct(0);
       setSupplHousingFundPct(0);
@@ -67,7 +69,7 @@ function ConfigForm({ config, onCalculate }) {
     checkHousingFund(!housingFundChecked);
   };
 
-  const handleSupplHousingFundCheck = (e) => {
+  const handleSupplHousingFundCheck = e => {
     if (supplHousingFundChecked) {
       setSupplHousingFundPct(0);
     } else {
@@ -89,14 +91,14 @@ function ConfigForm({ config, onCalculate }) {
     setSupplHousingFundPct(value);
   };
 
-  const handleCalc = (e) => {
+  const handleCalc = e => {
     e.preventDefault();
 
     onCalculate({
       ...config,
       salary,
       additional_deduction: additionalDeduction,
-      social_ins_base: socialInsBase,
+      social_ins_base_max: socialInsBase,
       housing_fund_pct: housingFundPct,
       supplementary_housing_fund_pct: supplHousingFundPct,
     });
@@ -140,7 +142,7 @@ function ConfigForm({ config, onCalculate }) {
               control={Select}
               value={housingFundPct}
               onChange={handleHousingFundChange}
-              options={[7, 6, 5].map((item) => ({
+              options={[7, 6, 5].map(item => ({
                 key: item,
                 text: `${item} %`,
                 value: item,
@@ -159,7 +161,7 @@ function ConfigForm({ config, onCalculate }) {
                 control={Select}
                 value={supplHousingFundPct}
                 onChange={handleSupplHousingFundChange}
-                options={[5, 4, 3, 2, 1].map((item) => ({
+                options={[5, 4, 3, 2, 1].map(item => ({
                   key: item,
                   text: `${item} %`,
                   value: item,

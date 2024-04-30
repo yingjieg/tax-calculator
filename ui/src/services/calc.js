@@ -34,29 +34,32 @@ function get_tax_pct(total_income) {
 
 const HOUSING_FUND_PCT = {
   basic: {
-    7: [348, 3922],
-    6: [298, 3362],
-    5: [248, 2802],
+    7: [362, 5116],
+    6: [310, 4386],
+    5: [260, 3654],
   },
   suppl: {
-    5: [248, 2802],
-    4: [198, 2242],
-    3: [148, 1682],
-    2: [100, 1120],
-    1: [50, 560],
+    5: [260, 3654],
+    4: [208, 2924],
+    3: [156, 2192],
+    2: [104, 1462],
+    1: [52, 730],
   },
 };
 
 function get_housing_fund(config) {
-  const { social_ins_base, housing_fund_pct, supplementary_housing_fund_pct } =
-    config;
+  const {
+    social_ins_base_max,
+    housing_fund_pct,
+    supplementary_housing_fund_pct,
+  } = config;
 
   const _get_housing_fund = (type, pct) => {
     let amount = 0;
 
     if (HOUSING_FUND_PCT[type][pct]) {
       const [min, max] = HOUSING_FUND_PCT[type][pct];
-      const v = (social_ins_base * pct) / 100;
+      const v = (social_ins_base_max * pct) / 100;
 
       if (v <= min / 2) {
         amount = min / 2;
@@ -83,13 +86,19 @@ export function calc_insurance(config, paid_by = "individual") {
   const {
     salary,
     tax_threshold,
-    social_ins_base,
+    social_ins_base_min,
+    social_ins_base_max,
     housing_fund_base,
     additional_deduction,
     ...rest_pcts
   } = config;
 
-  const sib = salary < social_ins_base ? salary : social_ins_base;
+  let sib = salary;
+  if (salary < social_ins_base_min) {
+    sib = social_ins_base_min;
+  } else if (salary > social_ins_base_max) {
+    sib = social_ins_base_max;
+  }
 
   const idx = paid_by === "individual" ? 0 : 1;
 
@@ -103,7 +112,7 @@ export function calc_insurance(config, paid_by = "individual") {
   const [housing_fund, supplementary_housing_fund] = get_housing_fund(config);
 
   const injury_ins = (sib * rest_pcts["injury_ins_pct"][idx]) / 100;
-  const maternity_ins = (sib * rest_pcts["maternity_ins_pct"][idx]) / 100;
+  // const maternity_ins = (sib * rest_pcts["maternity_ins_pct"][idx]) / 100;
 
   let total =
     pension_ins +
@@ -111,8 +120,8 @@ export function calc_insurance(config, paid_by = "individual") {
     unemployment_ins +
     housing_fund +
     supplementary_housing_fund +
-    injury_ins +
-    maternity_ins;
+    injury_ins;
+  // maternity_ins;
 
   return {
     pension_ins: pension_ins.toFixed(2),
@@ -121,7 +130,7 @@ export function calc_insurance(config, paid_by = "individual") {
     housing_fund: housing_fund.toFixed(2),
     supplementary_housing_fund: supplementary_housing_fund.toFixed(2),
     injury_ins: injury_ins.toFixed(2),
-    maternity_ins: maternity_ins.toFixed(2),
+    // maternity_ins: maternity_ins.toFixed(2),
     total: total.toFixed(2),
   };
 }
@@ -134,6 +143,10 @@ export function calc_tax(social_insurance, config) {
 
   const taxable_salary =
     salary - tax_threshold - social_insurance - additional_deduction;
+
+  // if (taxable_salary <= 0) {
+  //   return new Array(12).fill(0);
+  // }
 
   const taxs = [];
 

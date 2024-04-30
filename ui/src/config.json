@@ -1,23 +1,29 @@
 {
   "salary": 0,
-
   "tax_threshold": 5000,
-
   "additional_deduction": 0,
-
-  "social_ins_base": 34188,
-
-  "pension_ins_pct": [8, 16],
-
-  "medical_ins_pct": [2, 10.5],
-
-  "unemployment_ins_pct": [0.5, 0.5],
-
+  "social_ins_base_min": 7310,
+  "social_ins_base_max": 36549,
+  "pension_ins_pct": [
+    8,
+    16
+  ],
+  "medical_ins_pct": [
+    2,
+    10
+  ],
+  "unemployment_ins_pct": [
+    0.5,
+    0.5
+  ],
   "housing_fund_pct": 7,
-
   "supplementary_housing_fund_pct": 0,
-
-  "injury_ins_pct": [0, 0.16],
-
-  "maternity_ins_pct": [0, 0]
+  "injury_ins_pct": [
+    0,
+    0.16
+  ],
+  "maternity_ins_pct": [
+    0,
+    0
+  ]
 }
